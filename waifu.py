@@ -39,7 +39,7 @@ class Waifu:
         self.mic = sr.Microphone(device_index=mic_index)
         self.recogniser = sr.Recognizer()
         
-        openai.api_key = getenv("OPENAI_API_KEY")
+        openai.api_key = getenv("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")
         self.update_chatbot(service = chatbot_service, model = chatbot_model, temperature = chatbot_temperature, personality_file = personality_file)
         self.__load_chatbot_data()
 
@@ -85,7 +85,7 @@ class Waifu:
         elif self.tts_service is None:
             self.tts_service = 'google'
 
-        set_api_key(getenv('ELEVENLABS_API_KEY'))
+        set_api_key(getenv('sk_f8d734ced72efce65f04d01daa73fa72eb696fa402362d9b'))
 
         if voice:
             self.tts_voice = voice
