@@ -1,24 +1,50 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
-      "use": "@vercel/python"
+      "src": "api.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "includeFiles": [
+          "VTSController.py",
+          "personality.txt",
+          "message_history.txt"
+        ]
+      }
     }
   ],
   "routes": [
     {
+      "src": "/",
+      "dest": "/api.py",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/chat",
+      "dest": "/api.py",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/upload_voice",
+      "dest": "/api.py",
+      "methods": ["POST"]
+    },
+    {
       "src": "/(.*)",
-      "dest": "api/index.py"
+      "status": 404,
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate"
+      }
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api.py"
     }
   ],
   "env": {
-    "PYTHON_VERSION": "3.10.5",
-    "OPENAI_API_KEY": "@openai_api_key",
-    "ELEVENLABS_API_KEY": "@elevenlabs_api_key",
-    "YOUR_OTHER_ENV_VAR": "@your_other_env_var_secret"
-    // Add any other environment variables your application needs here.
-    // Use the "@" prefix to indicate Vercel secrets.
+    "PYTHONPATH": "./"
   }
 }
