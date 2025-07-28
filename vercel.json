@@ -12,39 +12,29 @@
           "message_history.txt"
         ]
       }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/",
-      "dest": "/api.py",
-      "methods": ["GET"]
     },
     {
-      "src": "/chat",
-      "dest": "/api.py",
-      "methods": ["POST"]
-    },
-    {
-      "src": "/upload_voice",
-      "dest": "/api.py",
-      "methods": ["POST"]
-    },
-    {
-      "src": "/(.*)",
-      "status": 404,
-      "headers": {
-        "Cache-Control": "public, max-age=0, must-revalidate"
-      }
+      "src": "public/**",
+      "use": "@vercel/static"
     }
   ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/",
+      "destination": "/api.py"
+    },
+    {
+      "source": "/chat",
+      "destination": "/api.py"
+    },
+    {
+      "source": "/upload_voice",
       "destination": "/api.py"
     }
   ],
   "env": {
     "PYTHONPATH": "./"
-  }
+  },
+  "cleanUrls": true,
+  "trailingSlash": false
 }
